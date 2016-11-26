@@ -20,24 +20,27 @@ class qa_catexp_admin {
 `categoryid` int(11) NOT NULL,
   `userid` int(11) NOT NULL,
   `points` int(11) DEFAULT 0,
+	 `netvotes` int(11) DEFAULT '0',
+  `aselects` int(11) DEFAULT '0',
   PRIMARY KEY (`categoryid`,`userid`)
 )";
                 
 		 require_once QA_INCLUDE_DIR.'app/options.php';
 
                 $options=qa_get_options(qa_db_points_option_names());
+$aselectq = "(SELECT COUNT(*) AS aselecteds FROM ^posts AS userid_src JOIN ^posts AS questions ON questions.selchildid=userid_src.postid WHERE userid_src.userid=a.userid AND userid_src.type='A' AND NOT (questions.userid<=>userid_src.userid))";
 $aselecteds = $options['points_multiple']*$options['points_a_selected']
-                ."*(SELECT COUNT(*) AS aselecteds FROM ^posts AS userid_src JOIN ^posts AS questions ON questions.selchildid=userid_src.postid WHERE userid_src.userid=a.userid AND userid_src.type='A' AND NOT (questions.userid<=>userid_src.userid))";
+                ."*".$aselectq;
 
                  $usertable=qa_db_add_table_prefix('userpoints');
                  $cattable=qa_db_add_table_prefix('categories');
-$avoteds = $options['points_multiple'] . "*(SELECT COALESCE(SUM(".
+$avotedq="(SELECT COALESCE(SUM(".
                                         "LEAST(".((int)$options['points_per_a_voted_up'])."*upvotes,".((int)$options['points_a_voted_max_gain']).")".
                                         "-".
                                         "LEAST(".((int)$options['points_per_a_voted_down'])."*downvotes,".((int)$options['points_a_voted_max_loss']).")".
                                         "), 0) AS avoteds FROM ^posts AS userid_src WHERE LEFT(type, 1)='A' AND userid = a.userid)";
-
-		$queries[] = "insert into $tablename(categoryid, userid, points) select b.categoryid, a.userid, ".$aselecteds." + ".$avoteds." as points from $cattable b,  $usertable a group by b.categoryid, a.userid";
+$avoteds = $options['points_multiple'] . "*".$avotedq;
+		$queries[] = "insert into $tablename(categoryid, userid, points, netvotes, aselects) select b.categoryid, a.userid, ".$aselecteds." + ".$avoteds." as points,".$avotedq." as netvotes, ".$aselectq." as aselects  from $cattable b,  $usertable a group by b.categoryid, a.userid";
         }        
 	return $queries;
         }

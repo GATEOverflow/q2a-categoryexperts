@@ -21,4 +21,5 @@
 */
 
 return array(
+'points' => 'Points',
 );
