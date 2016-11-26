@@ -1,0 +1,195 @@
+/*
+* 	Owl Carousel Owl Demo Theme 
+*	v1.3.3
+*/
+
+/* Setup item */
+.owl-column-wrapp{
+	padding:0;
+}
+
+.item{
+	margin:0 15px;
+}
+
+.item img.img-responsive{
+	display: block;
+	width: 100%;
+	height: auto;
+}
+
+.owl-theme .owl-controls{
+	
+	text-align: center;
+}
+
+/* Styling Next and Prev buttons */
+
+.owl-theme .owl-controls .owl-buttons div{
+	font-family: 'FontAwesome';
+	color: #FFF;
+	display: inline-block;
+	zoom: 1;
+	*display: inline;/*IE7 life-saver */
+	margin: 5px;
+	padding: 3px 15px;
+	width:40px;
+	text-align:center;
+	font-size: 14px;
+	-webkit-border-radius: 2px;
+	-moz-border-radius: 2px;
+	border-radius: 2px;
+	background: #2b2b2b;
+	filter: Alpha(Opacity=50);/*IE7 fix*/
+	opacity: 0.5;
+}
+
+.owl-theme .owl-controls .owl-buttons div.owl-prev:after{
+	content: "\f053";
+}
+
+.owl-theme .owl-controls .owl-buttons div.owl-next:after{
+	content: "\f054";
+}
+
+/* Clickable class fix problem with hover on touch devices */
+/* Use it for non-touch hover action */
+.owl-theme .owl-controls.clickable .owl-buttons div:hover{
+	filter: Alpha(Opacity=100);/*IE7 fix*/
+	opacity: 1;
+	text-decoration: none;
+}
+
+/* Top Controls */
+.topControls,
+.topControls-left,
+.topControls-right{
+	padding-top:60px;
+}
+
+.topControls.owl-theme .owl-controls .owl-buttons div,
+.topControls-left.owl-theme .owl-controls .owl-buttons div,
+.topControls-right.owl-theme .owl-controls .owl-buttons div{
+	position:absolute;
+	top:0;
+}
+
+.topControls.owl-theme .owl-controls .owl-buttons div.owl-prev{
+	right: 26px;
+}
+
+.topControls.owl-theme .owl-controls .owl-buttons div.owl-next{
+	right:50%;
+	margin-right:-45px;
+}
+
+.topControls-left.owl-theme .owl-controls .owl-buttons div.owl-prev{
+	left:10px;
+}
+
+.topControls-left.owl-theme .owl-controls .owl-buttons div.owl-next{
+	left:60px;
+}
+
+
+.topControls-right.owl-theme .owl-controls .owl-buttons div.owl-prev{
+	right:10px;
+}
+
+.topControls-right.owl-theme .owl-controls .owl-buttons div.owl-next{
+	right:60px;
+}
+
+.leftControls-right.owl-theme .owl-controls .owl-buttons div{
+	position: absolute;
+    background: none;
+    padding: 0;
+    top: -21px;
+    color: #c2c4c6;
+    margin-top: -15px;
+    font-size: 21px;
+    height: auto;
+    margin-left: 10px;
+    width: auto;
+}
+
+.leftControls-right.owl-theme .owl-controls .owl-buttons div.owl-prev{
+	right: 26px;
+    /* margin-left: -11px; */
+}
+
+.leftControls-right.owl-theme .owl-controls .owl-buttons div.owl-next{
+	    right: 6px;
+}
+
+.leftControls-right.owl-theme .owl-controls .owl-buttons div.owl-prev:hover,
+.leftControls-right.owl-theme .owl-controls .owl-buttons div.owl-next:hover{
+	background:none;
+}
+
+/* Styling Pagination*/
+
+.owl-theme .owl-controls .owl-page{
+	display: inline-block;
+	zoom: 1;
+	*display: inline;/*IE7 life-saver */
+}
+.owl-theme .owl-controls .owl-page span{
+	display: block;
+	width: 12px;
+	height: 12px;
+	margin: 5px 4px;
+	filter: Alpha(Opacity=50);/*IE7 fix*/
+	opacity: 0.5;
+	-webkit-border-radius: 50%;
+	-moz-border-radius: 50%;
+	border-radius: 50%;
+	background: #2b2b2b;
+}
+
+.owl-theme .owl-controls .owl-page.active span,
+.owl-theme .owl-controls.clickable .owl-page:hover span{
+	filter: Alpha(Opacity=100);/*IE7 fix*/
+	opacity: 1;
+}
+
+/* If PaginationNumbers is true */
+
+.owl-theme .owl-controls .owl-page span.owl-numbers{
+	height: auto;
+	width: auto;
+	color: #FFF;
+	padding: 2px 10px;
+	font-size: 12px;
+	-webkit-border-radius: 2px;
+	-moz-border-radius: 2px;
+	border-radius: 2px;
+}
+
+/* preloading images */
+.owl-item.loading{
+	min-height: 150px;
+	background: url(../img/AjaxLoader.gif) no-repeat center center
+}
+
+@media(max-width:1024px){
+    .leftControls-right.owl-theme .owl-controls .owl-buttons div.owl-prev{
+        margin-left: 0px;
+    }
+
+    .leftControls-right.owl-theme .owl-controls .owl-buttons div.owl-next{
+        margin-right: 0px;
+    }
+
+}
+
+@media(max-width:767px){
+    .leftControls-right.owl-theme .owl-controls .owl-buttons div.owl-prev{
+        margin-left: 15px;
+    }
+
+    .leftControls-right.owl-theme .owl-controls .owl-buttons div.owl-next{
+        margin-right: 15px;
+    }
+
+}
