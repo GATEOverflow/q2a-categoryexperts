@@ -19,7 +19,7 @@ class qa_catexp_widget {
 		|| $template === 'qa'
 			)
 			return true;
-		return false;;
+		return false;
 	}
 
 	function allow_region($region)
@@ -40,6 +40,9 @@ class qa_catexp_widget {
 	{
 		if(qa_opt("qa_catexp_enable") )
 		{
+			if($template === 'qa')
+			$categoryslugs = qa_request_parts( 0 );
+			else
 			$categoryslugs = qa_request_parts( 1 );
 			$countslugs = count( $categoryslugs );
 			if($countslugs < 1)
@@ -53,7 +56,7 @@ class qa_catexp_widget {
                         <div class="row">
                         <div class="col-md-8 col-md-offset-2">
                         <div class="section-heading">
-                        <h3>Experts in '.$cat['title'].' </h3>'.
+                        <h3>'.qa_lang_html('catexp_lang/title').$cat['title'].' </h3>'.
                         //<p>Top Scoring Users in '.$cat['title'].'</p>
                         '<i class="fa fa-user"></i>
                         </div>
