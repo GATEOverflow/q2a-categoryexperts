@@ -11,9 +11,14 @@ class qa_catexp_widget {
 
 	function allow_template($template)
 	{
-		if($template == 'question')
-			return false;
-		return true;
+		if($template === 'questions'
+		|| $template === 'unanswered'
+		|| $template === 'activity'
+		|| $template === 'unanswered'
+		|| $template === 'hot'
+			)
+			return true;
+		return false;;
 	}
 
 	function allow_region($region)
@@ -38,13 +43,12 @@ class qa_catexp_widget {
 			$countslugs = count( $categoryslugs );
 			if($countslugs < 1)
 				return;
-			$result = qa_db_query_sub("select categoryid, title from ^categories where tags like $",$categoryslugs[0]);
+			$result = qa_db_query_sub("select categoryid, title from ^categories where tags like $",$categoryslugs[$countslugs-1]);
                 	$cat = qa_db_read_one_assoc($result);
 				$topusers = $this->gettopusers($cat['categoryid']);
 
 				$themeobject->output('
 			 <div class="contain-wrapp gray-container padding-bot30">
-                        <div class="container">
                         <div class="row">
                         <div class="col-md-8 col-md-offset-2">
                         <div class="section-heading">
@@ -90,7 +94,6 @@ class qa_catexp_widget {
 
 				$themeobject->output(
 '
-				</div>
 				</div>
 				</div>
 				</div>

@@ -26,7 +26,11 @@ class qa_catexp_admin {
 				)";
 
 			require_once QA_INCLUDE_DIR.'app/options.php';
-			$catfilter = " and userid_src.categoryid = b.categoryid";
+			$catfilter = " and userid_src.categoryid = b.categoryid or userid_src.categoryid  in  (
+select categoryid from ^categories where parentid = b.categoryid
+union 
+select categoryid from ^categories where parentid in (select categoryid from ^categories where parentid = b.categoryid))";
+
 			$options=qa_get_options(qa_db_points_option_names());
 			$aselectq = "(SELECT COUNT(*) AS aselecteds FROM ^posts AS userid_src JOIN ^posts AS questions ON questions.selchildid=userid_src.postid WHERE userid_src.userid=a.userid AND userid_src.type='A' AND NOT (questions.userid<=>userid_src.userid)".$catfilter .")";
 			$aselecteds = $options['points_multiple']*$options['points_a_selected']
@@ -59,9 +63,37 @@ class qa_catexp_admin {
 
 		$ok = null;
 
-		if (qa_clicked('qa_bp_save')) {
+		if (qa_clicked('qa_catexp_save')) {
 			qa_opt('qa_catexp_enable',(bool)qa_post_text('qa_catexp_enable'));
 			$ok = qa_lang('admin/options_saved');
+		}
+		if (qa_clicked('qa_catexp_recalc')) {
+		
+
+			$catfilter = " and userid_src.categoryid = b.categoryid or userid_src.categoryid  in  (
+select categoryid from ^categories where parentid = b.categoryid
+union 
+select categoryid from ^categories where parentid in (select categoryid from ^categories where parentid = b.categoryid))";
+
+                        $options=qa_get_options(qa_db_points_option_names());
+                        $aselectq = "(SELECT COUNT(*) AS aselecteds FROM ^posts AS userid_src JOIN ^posts AS questions ON questions.selchildid=userid_src.postid WHERE userid_src.userid=a.userid AND userid_src.type='A' AND NOT (questions.userid<=>userid_src.userid)".$catfilter .")";
+                        $aselecteds = $options['points_multiple']*$options['points_a_selected']
+                                ."*".$aselectq;
+
+                        $usertable=qa_db_add_table_prefix('userpoints');
+                        $cattable=qa_db_add_table_prefix('categories');
+                        $avotedq="(SELECT COALESCE(SUM(".
+                                "LEAST(".((int)$options['points_per_a_voted_up'])."*upvotes,".((int)$options['points_a_voted_max_gain']).")".
+                                "-".
+                                "LEAST(".((int)$options['points_per_a_voted_down'])."*downvotes,".((int)$options['points_a_voted_max_loss']).")".
+                                "), 0) AS avoteds FROM ^posts AS userid_src WHERE LEFT(type, 1)='A' AND userid = a.userid".$catfilter.")";
+                        $avoteds = $options['points_multiple'] . "*".$avotedq;
+                        $query = "replace into ^catpoints(categoryid, userid, points, netvotes, aselects) select b.categoryid, a.userid, ".$aselecteds." + ".$avoteds." as points,".$avotedq." as netvotes, ".$aselectq." as aselects  from ^categories b,  ^userpoints a group by b.categoryid, a.userid";
+			$result = qa_db_query_sub($query);
+
+
+	if($result)
+				$ok = qa_lang('admin/options_saved');
 		}
 
 		// Create the form for display
@@ -83,6 +115,10 @@ class qa_catexp_admin {
 					array(
 						'label' => qa_lang_html('main/save_button'),
 						'tags' => 'NAME="qa_catexp_save"',
+					     ),
+					array(
+						'label' => qa_lang_html('catexp_lang/recalculate_button'),
+						'tags' => 'NAME="qa_catexp_recalc" title="'.qa_lang_html('catexp_lang/recalculate_button_pop').'"',
 					     ),
 					),
 			    );

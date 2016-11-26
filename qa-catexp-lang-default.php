@@ -22,4 +22,6 @@
 
 return array(
 'points' => 'Points',
+'recalculate_button' => 'Recalculate',
+'recalculate_button_pop' => 'Recalculate Points for All Categories',
 );
