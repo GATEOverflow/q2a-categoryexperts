@@ -5,7 +5,7 @@ function qa_db_points_update_ifuser($userid, $columns)
 {
 
 	qa_db_points_update_ifuser_base($userid, $columns);
-	if(qa_opt('qa_catexp_enable') === 1)
+	if(qa_opt('qa_catexp_enable') == 1)
 	{
 		$calculations=qa_db_points_calculations();
 	$catfilter = " and (userid_src.categoryid = b.categoryid or userid_src.categoryid  in  (
