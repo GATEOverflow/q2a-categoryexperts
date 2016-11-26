@@ -12,7 +12,7 @@ function qa_db_points_update_ifuser($userid, $columns)
 select categoryid from ^categories where parentid = b.categoryid)
 or userid_src.categoryid  in  (
 select categoryid from ^categories where parentid in (select categoryid from ^categories where parentid = b.categoryid)))";
-	$query = "replace into ^catqpoints (categoryid, userid, points, netvotes, aselects)  select  b.categoryid,$, ".
+	$query = "replace into ^catpoints (categoryid, userid, points, netvotes, aselects)  select  b.categoryid,$, ".
 $calculations['aselecteds']['multiple']."*(select  ".$calculations['aselecteds']['formula'].$catfilter.")+".
 $calculations['avoteds']['multiple']."*(select  ".$calculations['avoteds']['formula'].$catfilter.")
 as points,
