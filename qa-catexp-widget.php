@@ -28,7 +28,7 @@ class qa_catexp_widget {
 	}
 	function gettopusers($catid)
 	{
-		$query = "select a.userid as userid,a.handle as handle,date_format(a.created, '%M %Y') as created, a.avatarblobid as avatarblobid, a.email as email, a.avatarwidth as width, a.avatarheight as height,a.flags as flags, b.points as points, b.netvotes as netvotes, b.aselects as aselects  from ^users a join ^catpoints b on a.userid=b.userid  and b.categoryid = # and b.points>=0 order by b.points desc limit 10";
+		$query = "select a.userid as userid,a.handle as handle,date_format(a.created, '%M %Y') as created, a.avatarblobid as avatarblobid, a.email as email, a.avatarwidth as width, a.avatarheight as height,a.flags as flags, b.points as points, b.netvotes as netvotes, b.aselects as aselects  from ^users a join ^catpoints b on a.userid=b.userid  and b.categoryid = # and b.points>0 order by b.points desc limit 10";
 		$result = qa_db_query_sub($query, $catid);
 		$users = qa_db_read_all_assoc($result);
 		return $users;
