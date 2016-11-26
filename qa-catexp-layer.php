@@ -6,6 +6,7 @@ class qa_html_theme_layer extends qa_html_theme_base {
 		$template = $this->template;
 		if((qa_opt('qa_catexp_enable') == 1) && ($template === 'questions'
 				|| $template === 'unanswered'
+				|| $template === 'qa'
 				|| $template === 'activity'
 				|| $template === 'unanswered'
 				|| $template === 'hot')
@@ -27,6 +28,7 @@ class qa_html_theme_layer extends qa_html_theme_base {
 		$template = $this->template;
 		if((qa_opt('qa_catexp_enable')  == 1) &&  (($template === 'questions')
 				|| ($template === 'unanswered')
+				|| ($template === 'qa')
 				|| ($template === 'activity')
 				|| ($template === 'unanswered')
 				|| ($template === 'hot'))

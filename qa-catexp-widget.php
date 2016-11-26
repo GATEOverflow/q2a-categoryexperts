@@ -16,6 +16,7 @@ class qa_catexp_widget {
 		|| $template === 'activity'
 		|| $template === 'unanswered'
 		|| $template === 'hot'
+		|| $template === 'qa'
 			)
 			return true;
 		return false;;
