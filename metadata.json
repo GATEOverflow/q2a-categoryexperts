@@ -1,0 +1,12 @@
+{
+	"name": "Category Experts",
+	"description": "This plugin shows the top scoring users per category in Q2A",
+	"version": "1.0",
+	"date": "2016-11-25",
+	"uri": "https://github.com/arjunsuresh/q2a-categoryexperts",
+	"update_uri": "https://raw.githubusercontent.com/arjunsuresh/q2a-categoryexperts/master/metadata.json",
+	"author": "Arjun Suresh",
+	"author_uri": "http://gateoverflow.in/user/Arjun",
+	"license": "GPLv2",
+	"min_q2a": "1.5"
+}
