@@ -26,10 +26,10 @@ class qa_catexp_admin {
 				)";
 
 			require_once QA_INCLUDE_DIR.'app/options.php';
-			$catfilter = " and userid_src.categoryid = b.categoryid or userid_src.categoryid  in  (
-select categoryid from ^categories where parentid = b.categoryid
-union 
-select categoryid from ^categories where parentid in (select categoryid from ^categories where parentid = b.categoryid))";
+			$catfilter = " and (userid_src.categoryid = b.categoryid or userid_src.categoryid  in  (
+select categoryid from ^categories where parentid = b.categoryid) OR
+userid_src.categoryid  in  ( 
+select categoryid from ^categories where parentid in (select categoryid from ^categories where parentid = b.categoryid)))";
 
 			$options=qa_get_options(qa_db_points_option_names());
 			$aselectq = "(SELECT COUNT(*) AS aselecteds FROM ^posts AS userid_src JOIN ^posts AS questions ON questions.selchildid=userid_src.postid WHERE userid_src.userid=a.userid AND userid_src.type='A' AND NOT (questions.userid<=>userid_src.userid)".$catfilter .")";
@@ -70,18 +70,16 @@ select categoryid from ^categories where parentid in (select categoryid from ^ca
 		if (qa_clicked('qa_catexp_recalc')) {
 		
 
-			$catfilter = " and userid_src.categoryid = b.categoryid or userid_src.categoryid  in  (
-select categoryid from ^categories where parentid = b.categoryid
-union 
-select categoryid from ^categories where parentid in (select categoryid from ^categories where parentid = b.categoryid))";
+			$catfilter = " and (userid_src.categoryid = b.categoryid or userid_src.categoryid  in  (
+select categoryid from ^categories where parentid = b.categoryid)
+OR userid_src.categoryid  in  ( 
+select categoryid from ^categories where parentid in (select categoryid from ^categories where parentid = b.categoryid)))";
 
                         $options=qa_get_options(qa_db_points_option_names());
                         $aselectq = "(SELECT COUNT(*) AS aselecteds FROM ^posts AS userid_src JOIN ^posts AS questions ON questions.selchildid=userid_src.postid WHERE userid_src.userid=a.userid AND userid_src.type='A' AND NOT (questions.userid<=>userid_src.userid)".$catfilter .")";
                         $aselecteds = $options['points_multiple']*$options['points_a_selected']
                                 ."*".$aselectq;
 
-                        $usertable=qa_db_add_table_prefix('userpoints');
-                        $cattable=qa_db_add_table_prefix('categories');
                         $avotedq="(SELECT COALESCE(SUM(".
                                 "LEAST(".((int)$options['points_per_a_voted_up'])."*upvotes,".((int)$options['points_a_voted_max_gain']).")".
                                 "-".
