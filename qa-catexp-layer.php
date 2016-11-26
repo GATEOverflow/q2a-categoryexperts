@@ -4,11 +4,11 @@ class qa_html_theme_layer extends qa_html_theme_base {
 		$version=1.12;
 		qa_html_theme_base::body_suffix();
 		$template = $this->template;
-		if(qa_opt('qa_catexp_enable') === 1 && $template === 'questions'
+		if((qa_opt('qa_catexp_enable') === 1) && ($template === 'questions'
 				|| $template === 'unanswered'
 				|| $template === 'activity'
 				|| $template === 'unanswered'
-				|| $template === 'hot'
+				|| $template === 'hot')
 		  ){
 
 			$this->output('
@@ -25,11 +25,11 @@ class qa_html_theme_layer extends qa_html_theme_base {
 	function head_css(){
 		$version=1.07;
 		$template = $this->template;
-		if(qa_opt('qa_catexp_enable')  === 1 && $template === 'questions'
+		if((qa_opt('qa_catexp_enable')  === 1) && ($template === 'questions'
 				|| $template === 'unanswered'
 				|| $template === 'activity'
 				|| $template === 'unanswered'
-				|| $template === 'hot'
+				|| $template === 'hot')
 		  ){
 			$this->output('
 					<link href="'.QA_HTML_THEME_LAYER_URLTOROOT.'css/style.css?v='.$version.'" rel="stylesheet" type="text/css">
