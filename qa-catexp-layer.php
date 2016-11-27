@@ -41,7 +41,7 @@ class qa_html_theme_layer extends qa_html_theme_base {
 					.owl-theme .owl-controls.clickable .owl-buttons div:hover,
 					.img-caption{
 					background-color: rgba(62, 64, 230, 0.9);
-					}
+					}'.qa_opt('qa_catexp_css').'
 					</style>
 					');
 		}

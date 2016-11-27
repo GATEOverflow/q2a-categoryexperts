@@ -25,4 +25,7 @@ return array(
 'recalculate_button' => 'Recalculate',
 'recalculate_button_pop' => 'Recalculate Points for All Categories',
 'title' => 'Experts in ',
+'membersince' => 'Member Since: ',
+'voteups' => 'Net Votes: ',
+'bestans' => 'Best Ans: ',
 );

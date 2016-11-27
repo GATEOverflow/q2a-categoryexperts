@@ -6,6 +6,8 @@ class qa_catexp_admin {
 		switch($option) {
 			case 'qa_catexp_enable': 
 				return 1;
+			case 'qa_catexp_css': 
+				return '.catexperts{font-size:12px}';
 			default:
 				return null;				
 		}
@@ -65,6 +67,7 @@ select categoryid from ^categories where parentid in (select categoryid from ^ca
 
 		if (qa_clicked('qa_catexp_save')) {
 			qa_opt('qa_catexp_enable',(bool)qa_post_text('qa_catexp_enable'));
+			qa_opt('qa_catexp_css',(bool)qa_post_text('qa_catexp_css'));
 			$ok = qa_lang('admin/options_saved');
 		}
 		if (qa_clicked('qa_catexp_recalc')) {
@@ -102,6 +105,12 @@ select categoryid from ^categories where parentid in (select categoryid from ^ca
 				'tags' => 'name="qa_catexp_enable"',
 				'value' => qa_opt('qa_catexp_enable'),
 				'type' => 'checkbox',
+				);
+		$fields[] = array(
+				'label' => 'Category Experts CSS',
+				'tags' => 'name="qa_catexp_css"',
+				'value' => qa_opt('qa_catexp_css'),
+				'type' => 'textarea',
 				);
 
 		return array(           

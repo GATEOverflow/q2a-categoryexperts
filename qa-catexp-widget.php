@@ -24,7 +24,7 @@ class qa_catexp_widget {
 
 	function allow_region($region)
 	{
-		return true;
+		return $region === 'main';
 
 	}
 	function gettopusers($catid)
@@ -45,7 +45,7 @@ class qa_catexp_widget {
 			else
 			$categoryslugs = qa_request_parts( 1 );
 			$countslugs = count( $categoryslugs );
-			if($countslugs < 1)
+			if($countslugs < 1 || ($countslugs == 1 && $categoryslugs[0] ==''))
 				return;
 			$result = qa_db_query_sub("select categoryid, title from ^categories where tags like $",$categoryslugs[$countslugs-1]);
                 	$cat = qa_db_read_one_assoc($result);
@@ -57,7 +57,6 @@ class qa_catexp_widget {
                         <div class="col-md-8 col-md-offset-2">
                         <div class="section-heading">
                         <h3>'.qa_lang_html('catexp_lang/title').$cat['title'].' </h3>'.
-                        //<p>Top Scoring Users in '.$cat['title'].'</p>
                         '<i class="fa fa-user"></i>
                         </div>
                         </div>
@@ -65,7 +64,7 @@ class qa_catexp_widget {
 
 
 
-			<div class="row">
+			<div class="row catexperts">
                         <div class="col-md-12 owl-column-wrapp">
                         <div id="team" class="owl-carousel leftControls-right">');
 
@@ -76,9 +75,9 @@ class qa_catexp_widget {
 					<div class="img-wrapper">
 					<div class="img-caption capZoomIn">
 					<div class="team-network">
-					<p>Member since '.$topusers[$i]['created'].
+					<p>'.qa_lang_html('catexp_lang/membersince').$topusers[$i]['created'].
 					'<br>
-                                Voteups :'.$topusers[$i]['netvotes'].' BestAns :'.$topusers[$i]['aselects'].' </p>
+                                '.qa_lang_html('catexp_lang/voteups').$topusers[$i]['netvotes']." ".qa_lang_html('catexp_lang/bestans').$topusers[$i]['aselects'].' </p>
 
 					</div>
 					</div>');
