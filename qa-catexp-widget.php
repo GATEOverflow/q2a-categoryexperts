@@ -48,7 +48,8 @@ class qa_catexp_widget {
 			if($countslugs < 1 || ($countslugs == 1 && $categoryslugs[0] ==''))
 				return;
 			$result = qa_db_query_sub("select categoryid, title from ^categories where tags like $",$categoryslugs[$countslugs-1]);
-                	$cat = qa_db_read_one_assoc($result);
+                	$cat = qa_db_read_one_assoc($result, true);
+			if(!$cat) return;
 				$topusers = $this->gettopusers($cat['categoryid']);
 
 				$themeobject->output('
