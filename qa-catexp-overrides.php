@@ -18,7 +18,7 @@ $calculations['avoteds']['multiple']."*(select  ".$calculations['avoteds']['form
 as points,
 (select  ".$calculations['avoteds']['formula'].$catfilter.") as netvotes,
 (select  ".$calculations['aselecteds']['formula'].$catfilter.") as aselects
- from  qaee_categories b";
+ from  ^categories b";
 
 	qa_db_query_raw(str_replace('~', "='".qa_db_escape_string($userid)."'", qa_db_apply_sub($query, array($userid))));
 								// build like this so that a #, $ or ^ character in the $userid (if external integration) isn't substituted
