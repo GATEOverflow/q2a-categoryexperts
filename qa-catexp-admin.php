@@ -28,6 +28,7 @@ class qa_catexp_admin {
 				)";
 
 			require_once QA_INCLUDE_DIR.'app/options.php';
+			require_once QA_INCLUDE_DIR.'db/points.php';
 			$catfilter = " and (userid_src.categoryid = b.categoryid or userid_src.categoryid  in  (
 select categoryid from ^categories where parentid = b.categoryid) OR
 userid_src.categoryid  in  ( 
