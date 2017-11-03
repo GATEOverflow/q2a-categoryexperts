@@ -11,7 +11,7 @@ function qa_db_points_update_ifuser($userid, $columns)
 		//$catfilter = "";
 //		$catfilter = "  and (userid_src.categoryid = b.categoryid)";// or userid_src.categoryid  in  (
 		$catfilter = "  and (userid_src.catidpath1 =b.categoryid or userid_src.catidpath2 = b.categoryid or userid_src.categoryid = b.categoryid)";// b.categoryid)";// or userid_src.categoryid  in  (
-		$query1 = "insert into ^catpoints (categoryid, userid, points)  (select  b.categoryid,#, ".
+		$query1 = "insert into ^catpoints (categoryid, userid, points)  (select  b.categoryid,$, ".
 			$calculations['aselecteds']['multiple']."*(select  ".$calculations['aselecteds']['formula'].$catfilter.")+".
 			$calculations['avoteds']['multiple']."*(select  ".$calculations['avoteds']['formula'].$catfilter.") 
 			as points from  ^categories b) on duplicate key update ^catpoints.points=points";
@@ -23,8 +23,8 @@ function qa_db_points_update_ifuser($userid, $columns)
 			from  ^categories b) on duplicate key update ^catpoints.aselects=aselects";
 
 		qa_db_query_raw(str_replace('~', "='".qa_db_escape_string($userid)."'", qa_db_apply_sub($query1, array($userid))));
-	//	qa_db_query_raw(str_replace('~', "='".qa_db_escape_string($userid)."'", qa_db_apply_sub($query2, array($userid))));
-	//	qa_db_query_raw(str_replace('~', "='".qa_db_escape_string($userid)."'", qa_db_apply_sub($query3, array($userid))));
+		qa_db_query_raw(str_replace('~', "='".qa_db_escape_string($userid)."'", qa_db_apply_sub($query2, array($userid))));
+		qa_db_query_raw(str_replace('~', "='".qa_db_escape_string($userid)."'", qa_db_apply_sub($query3, array($userid))));
 	}
 }
 
