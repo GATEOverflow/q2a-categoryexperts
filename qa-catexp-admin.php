@@ -112,6 +112,7 @@ select categoryid from ^categories where parentid in (select categoryid from ^ca
 				'tags' => 'name="qa_catexp_css"',
 				'value' => qa_opt('qa_catexp_css'),
 				'type' => 'textarea',
+				'rows' => '20',
 				);
 
 		return array(           
