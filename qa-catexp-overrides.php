@@ -14,13 +14,13 @@ function qa_db_points_update_ifuser($userid, $columns)
 		$query1 = "insert into ^catpoints (categoryid, userid, points)  (select  b.categoryid,$, ".
 			$calculations['aselecteds']['multiple']."*(select  ".$calculations['aselecteds']['formula'].$catfilter.")+".
 			$calculations['avoteds']['multiple']."*(select  ".$calculations['avoteds']['formula'].$catfilter.") 
-			as points from  ^categories b) on duplicate key update ^catpoints.points=points";
+			as newpoints from  ^categories b) on duplicate key update ^catpoints.points=newpoints";
 		$query2 = "insert into ^catpoints (categoryid, userid, netvotes)  (select  b.categoryid,$, ".
-			"(select  ".$calculations['avoteds']['formula'].$catfilter.") as netvotes
-			from  ^categories b) on duplicate key update ^catpoints.netvotes=netvotes";
+			"(select  ".$calculations['avoteds']['formula'].$catfilter.") as newnetvotes
+			from  ^categories b) on duplicate key update ^catpoints.netvotes=newnetvotes";
 		$query3 = "insert into ^catpoints (categoryid, userid, aselects)  (select  b.categoryid,$, ".
-			"(select  ".$calculations['aselecteds']['formula'].$catfilter.") as aselects
-			from  ^categories b) on duplicate key update ^catpoints.aselects=aselects";
+			"(select  ".$calculations['aselecteds']['formula'].$catfilter.") as newaselects
+			from  ^categories b) on duplicate key update ^catpoints.aselects=newaselects";
 
 		qa_db_query_raw(str_replace('~', "='".qa_db_escape_string($userid)."'", qa_db_apply_sub($query1, array($userid))));
 		qa_db_query_raw(str_replace('~', "='".qa_db_escape_string($userid)."'", qa_db_apply_sub($query2, array($userid))));
