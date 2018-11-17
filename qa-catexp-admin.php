@@ -79,6 +79,7 @@ select categoryid from ^categories where parentid = b.categoryid)
 OR userid_src.categoryid  in  ( 
 select categoryid from ^categories where parentid in (select categoryid from ^categories where parentid = b.categoryid)))";
 
+                        require_once QA_INCLUDE_DIR.'db/points.php';
                         $options=qa_get_options(qa_db_points_option_names());
                         $aselectq = "(SELECT COUNT(*) AS aselecteds FROM ^posts AS userid_src JOIN ^posts AS questions ON questions.selchildid=userid_src.postid WHERE userid_src.userid=a.userid AND userid_src.type='A' AND NOT (questions.userid<=>userid_src.userid)".$catfilter .")";
                         $aselecteds = $options['points_multiple']*$options['points_a_selected']
